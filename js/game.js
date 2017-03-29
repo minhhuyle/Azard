@@ -9,6 +9,20 @@ function sum(tab){
     return sum;
 }
 
+for(var i = 1; i<11; ){
+    setTimeout(function(i){log(i);}, i*1000, i++)
+}
+
+i = 1;
+setTimeout(function(){
+    for(; i<11; i++){
+
+    }
+}, i*1000, i++)
+
+
+
+
 function createDieSVG(id){
     let svgNS = "http://www.w3.org/2000/svg";
     let svg = document.createElementNS(svgNS, "svg");
