@@ -82,6 +82,64 @@ function createDieSVG(id){
     return svg;
 }
 
+function createHorse() {
+    let svgNS = "http://www.w3.org/2000/svg";
+    let svgGround = document.getElementById("svgGround");
+
+    let cheval = Array();
+    let pos = [22, 16, 18, 34, 20, 40, 16, 50, 42, 50, 38, 40, 40, 34, 36, 20, 42, 20, 32, 4, 22, 16];
+
+
+
+    cheval[0] =  document.createElementNS(svgNS, "path");
+    cheval[0].setAttribute("visibility", "visible");
+    cheval[0].setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
+    cheval[0].setAttribute("fill", "gray");
+
+
+    cheval[0].setAttribute("d", "M" + pos);
+
+    svgGround.appendChild(cheval[0]);
+    /*
+    for(var j =0; j< 4; j++) {
+        for (var i = 0; i < 14; i++) {
+            circle[j * 14 + i] = document.createElementNS(svgNS, "circle");
+            circle[j * 14 + i].setAttribute("r", "15");
+            circle[j * 14 + i].setAttribute("visibility", "visible");
+            circle[j * 14 + i].setAttribute("visibility", "visible");
+            circle[j * 14 + i].setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
+
+            switch (j) {
+                case 0 :
+                    circle[j * 14 + i].setAttribute("cx", 33 * i + 18);
+                    circle[j * 14 + i].setAttribute("cy", 18);
+                    circle[j * 14 + i].setAttribute("fill", "yellow");
+
+                    break;
+                case 1 :
+                    circle[j * 14 + i].setAttribute("cx", 33 * 14 + 18);
+                    circle[j * 14 + i].setAttribute("cy", 33 * i + 18);
+                    circle[j * 14 + i].setAttribute("fill", "red");
+                    break;
+                case 2 :
+                    circle[j * 14 + i].setAttribute("cx", 33 * (14 - i) + 18);
+                    circle[j * 14 + i].setAttribute("cy", 33 * 14 + 18);
+                    circle[j * 14 + i].setAttribute("fill", "green");
+                    break;
+                case 3 :
+                    circle[j * 14 + i].setAttribute("cx", 18);
+                    circle[j * 14 + i].setAttribute("cy", 33 * (14 - i) + 18);
+                    circle[j * 14 + i].setAttribute("fill", "blue");
+                    break;
+
+                default :
+                    break;
+            }
+            svgGround.appendChild(circle[j * 14 + i]);
+        }
+    }*/
+}
+
 function setupGame(){
     for(var i =0; i<1; i++){
         let die = document.getElementById("svg"+i);
@@ -89,6 +147,7 @@ function setupGame(){
         die.appendChild(svg);
     }
     createGround();
+    createHorse();
 }
 
 function animateDie(id, value){
@@ -199,3 +258,4 @@ function reset(){
     log("Nouvelle Partie !");
     log("----------------");*/
 }
+
