@@ -116,14 +116,16 @@ function animateDie(id, value){
 }
 
 function rand(){
-    var des = Math.floor((Math.random() * 6) + 1);;
+    for(let j = 0; j < 10; j++){
+        var des = Math.floor((Math.random() * 6) + 1);
+        //animateDie(0, des);
+        setTimeout(function (value){animateDie(0, value);}, j*50, des);
+    }
     console.log(des);
-    //window.document.getElementById("d0").innerHTML = des;
-    animateDie(0, des);
     return des;
 }
 
-let activePlayer = 0;
+let activePlayer = -1;
 let horses = [
     [-1,-1],
     [-1,-1],
@@ -132,6 +134,7 @@ let horses = [
 ];
 function play(event) {
     event.preventDefault();
+    activePlayer  = (activePlayer + 1) % 4;
     let value = rand();
     log("--------------------------------");
     log("Tour de " + players[activePlayer]);
@@ -144,7 +147,6 @@ function play(event) {
             document.getElementById("p"+i).className = "label label-default";
         }
     }
-    activePlayer  = (activePlayer + 1) % 4;
 
     ///S'il n'a pas de cheval sur le board
     let activeHorses = 2 - horses[activePlayer].filter(function(x){return x==-1}).length;
@@ -173,54 +175,6 @@ function play(event) {
     }
     log("Chevaux : (" + horses[activePlayer] + ")");
 
-    /*
-
-        joueurActif = player;
-        let opponent = 1 - player;
-        //log("[Chance] : " + chance[player]+ ", " + chance[opponent]);
-
-        ///Premier lancer : Win si AZAR
-        if (chance[opponent] == null){
-            setChance(opponent);
-            document.getElementById("p"+opponent).disabled = true;
-            if (isAzar(chance[opponent])){
-                log("AZAR ! Joueur " + joueurs[player] + " gagne !")
-                document.getElementById("p"+player).disabled = true;
-            } else {
-                log("Chance de " + joueurs[opponent] + " = " + chance[opponent]);
-            }
-        }
-        ///Deuxième lancer : Lose si AZAR
-        else if (chance[player] == null) {
-            setChance(player);
-            document.getElementById("p"+player).disabled = true;
-            document.getElementById("p"+opponent).disabled = false;
-            if (isAzar(chance[player])){
-                log("AZAR ! Joueur " + joueurs[player] + " perd !")
-                document.getElementById("p"+opponent).disabled = true;
-            } else {
-                if (chance[0] == chance[1]){
-                    log("Chances égales ! Match nul!");
-                    document.getElementById("p"+opponent).disabled = true;
-                }
-                else{
-                    log("Chance de " + joueurs[player] + " = " + chance[player]);
-                }
-            }
-        }
-        ///Boucle de jeu
-        else{
-            log("Tour de " + joueurs[player]);
-            document.getElementById("p"+player).disabled = true;
-            document.getElementById("p"+opponent).disabled = false;
-            lancers[player] = rand();
-            score[player] = sum(lancers[player]);
-            log(score[player]);
-            if (score[player] == chance[0] || score[player] == chance[1]){
-                log("Gagné !");
-                document.getElementById("p"+opponent).disabled = true;
-            }
-        }*/
 }
 
 function log (message) {

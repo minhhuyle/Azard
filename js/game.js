@@ -9,20 +9,6 @@ function sum(tab){
     return sum;
 }
 
-for(var i = 1; i<11; ){
-    setTimeout(function(i){log(i);}, i*1000, i++)
-}
-
-i = 1;
-setTimeout(function(){
-    for(; i<11; i++){
-
-    }
-}, i*1000, i++)
-
-
-
-
 function createDieSVG(id){
     let svgNS = "http://www.w3.org/2000/svg";
     let svg = document.createElementNS(svgNS, "svg");
@@ -92,10 +78,12 @@ function animateDie(id, value){
 function rand(){
     var des = Array();
     console.log(des);
-    for(var i =0; i<3; i++){
-        des[i] = Math.floor((Math.random() * 6) + 1);
-        window.document.getElementById("d"+i).innerHTML = des[i];
-        animateDie(i, des[i]);
+    for(let j = 0; j < 20; j++){
+        for(let i =0; i<3; i++){
+            des[i] = Math.floor((Math.random() * 6) + 1);
+            window.document.getElementById("d"+i).innerHTML = des[i];
+            setTimeout(function (i, value){animateDie(i, value);}, j*100, i, des[i]);
+        }
     }
     return des;
 }
