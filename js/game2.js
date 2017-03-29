@@ -1,19 +1,52 @@
 /**
  * Created by MLE3657 on 28/03/2017.
  */
-/**
- * Created by MLE3657 on 28/03/2017.
- */
-function sum(tab){
-    let sum = 0;
-    for(elem in tab){
-        sum += tab[elem];
-    }
-    return sum;
-}
+
+let circle = Array();
 
 function createGround(){
+    let svgNS = "http://www.w3.org/2000/svg";
+    let svg = document.createElementNS(svgNS, "svgGround");
 
+    let svgGround = document.getElementById("svgGround");
+
+    for(var j =0; j< 4; j++) {
+        for (var i = 0; i < 14; i++) {
+            circle[j * 14 + i] = document.createElementNS(svgNS, "circle");
+            circle[j * 14 + i].setAttribute("r", "15");
+            circle[j * 14 + i].setAttribute("visibility", "visible");
+            circle[j * 14 + i].setAttribute("visibility", "visible");
+            circle[j * 14 + i].setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
+
+            switch (j) {
+                case 0 :
+                    circle[j * 14 + i].setAttribute("cx", 33 * i + 18);
+                    circle[j * 14 + i].setAttribute("cy", 18);
+                    circle[j * 14 + i].setAttribute("fill", "yellow");
+
+                    break;
+                case 1 :
+                    circle[j * 14 + i].setAttribute("cx", 33 * 14 + 18);
+                    circle[j * 14 + i].setAttribute("cy", 33 * i + 18);
+                    circle[j * 14 + i].setAttribute("fill", "red");
+                    break;
+                case 2 :
+                    circle[j * 14 + i].setAttribute("cx", 33 * (14 - i) + 18);
+                    circle[j * 14 + i].setAttribute("cy", 33 * 14 + 18);
+                    circle[j * 14 + i].setAttribute("fill", "green");
+                    break;
+                case 3 :
+                    circle[j * 14 + i].setAttribute("cx", 18);
+                    circle[j * 14 + i].setAttribute("cy", 33 * (14 - i) + 18);
+                    circle[j * 14 + i].setAttribute("fill", "blue");
+                    break;
+
+                default :
+                    break;
+            }
+            svgGround.appendChild(circle[j * 14 + i]);
+        }
+    }
 }
 
 function createDieSVG(id){
@@ -54,6 +87,7 @@ function setupGame(){
         let svg = createDieSVG(i);
         die.appendChild(svg);
     }
+    createGround();
 }
 
 function animateDie(id, value){
@@ -78,8 +112,6 @@ function animateDie(id, value){
         point[3].setAttribute("visibility", "visible");
         point[4].setAttribute("visibility", "visible");
     }
-    //point.setAttribute("visibility", "hidden");
-    //die.setAttribute("style", "fill:rgb(255,0,125);stroke-width: 3;stroke: rgb(0,0,0)")
 }
 
 function rand(){
@@ -89,12 +121,12 @@ function rand(){
     animateDie(0, des);
     return des;
 }
-
-
+let activePlayer = 0;
 function play() {
-    var ok = rand();
+    let value = rand();
+    log(value);
+    activePlayer  = (activePlayer + 1) % 4;
 
-    
 
 /*
 
