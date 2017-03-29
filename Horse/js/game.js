@@ -4,6 +4,11 @@
 
 let circle = Array();
 let players = ["Charles", "Minh", "Paul", "Loic"];
+let horsesG = Array();
+
+const posHorseDefault = [40,16,36,34,38,40,34,50,60,50,56,40,58,34,54,20,60,20,50,4,40,16];
+const offset = 30;
+let isAnimate = false;
 
 function createGround(){
     let svgNS = "http://www.w3.org/2000/svg";
@@ -11,34 +16,33 @@ function createGround(){
 
     let svgGround = document.getElementById("svgGround");
 
+
     for(var j =0; j< 4; j++) {
         for (var i = 0; i < 14; i++) {
             circle[j * 14 + i] = document.createElementNS(svgNS, "circle");
             circle[j * 14 + i].setAttribute("r", "15");
             circle[j * 14 + i].setAttribute("visibility", "visible");
-            circle[j * 14 + i].setAttribute("visibility", "visible");
             circle[j * 14 + i].setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
 
             switch (j) {
                 case 0 :
-                    circle[j * 14 + i].setAttribute("cx", 33 * i + 18);
-                    circle[j * 14 + i].setAttribute("cy", 18);
+                    circle[j * 14 + i].setAttribute("cx", 33 * i + 18 + offset);
+                    circle[j * 14 + i].setAttribute("cy", 18 + offset);
                     circle[j * 14 + i].setAttribute("fill", "yellow");
-
                     break;
                 case 1 :
-                    circle[j * 14 + i].setAttribute("cx", 33 * 14 + 18);
-                    circle[j * 14 + i].setAttribute("cy", 33 * i + 18);
+                    circle[j * 14 + i].setAttribute("cx", 33 * 14 + 18 + offset);
+                    circle[j * 14 + i].setAttribute("cy", 33 * i + 18 + offset);
                     circle[j * 14 + i].setAttribute("fill", "red");
                     break;
                 case 2 :
-                    circle[j * 14 + i].setAttribute("cx", 33 * (14 - i) + 18);
-                    circle[j * 14 + i].setAttribute("cy", 33 * 14 + 18);
+                    circle[j * 14 + i].setAttribute("cx", 33 * (14 - i) + 18 + offset);
+                    circle[j * 14 + i].setAttribute("cy", 33 * 14 + 18 + offset);
                     circle[j * 14 + i].setAttribute("fill", "green");
                     break;
                 case 3 :
-                    circle[j * 14 + i].setAttribute("cx", 18);
-                    circle[j * 14 + i].setAttribute("cy", 33 * (14 - i) + 18);
+                    circle[j * 14 + i].setAttribute("cx", 18 + offset);
+                    circle[j * 14 + i].setAttribute("cy", 33 * (14 - i) + 18 + offset);
                     circle[j * 14 + i].setAttribute("fill", "blue");
                     break;
 
@@ -86,58 +90,45 @@ function createHorse() {
     let svgNS = "http://www.w3.org/2000/svg";
     let svgGround = document.getElementById("svgGround");
 
-    let cheval = Array();
-    let pos = [22, 16, 18, 34, 20, 40, 16, 50, 42, 50, 38, 40, 40, 34, 36, 20, 42, 20, 32, 4, 22, 16];
+    horsesG[0] =
+        {
+            index:0,
+            pos2D: [...posHorseDefault],
+            svg : document.createElementNS(svgNS, "path")
+        };
+    horsesG[0].svg.setAttribute("visibility", "visible");
+    horsesG[0].svg.setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
+    horsesG[0].svg.setAttribute("fill", "gray");
+
+    horsesG[0].svg.setAttribute("d", "M" + posHorseDefault);
+    svgGround.appendChild(horsesG[0].svg);
+}
 
 
+function moveHorse(horse, movePoint) {
+    for(var i = 1; i<=movePoint; i++){
+        isAnimate = true;
 
-    cheval[0] =  document.createElementNS(svgNS, "path");
-    cheval[0].setAttribute("visibility", "visible");
-    cheval[0].setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
-    cheval[0].setAttribute("fill", "gray");
+        horse.index = (horse.index + 1)%(circle.length);
 
+        for(let j = 1; j <= 10; j++){
+            setTimeout(function(index, fragDelay, countToStop){
+                for(var k = 0 ; k < horse.pos2D.length; k++){
+                    if(index < 15 && k%2 == 0){
+                        horse.pos2D[k] += 3;
+                        if(fragDelay == 10){
+                            horse.pos2D[k]+=3;
+                        }
+                        horsesG[0].svg.setAttribute("d", "M" + horse.pos2D);
+                    }
+                }
 
-    cheval[0].setAttribute("d", "M" + pos);
-
-    svgGround.appendChild(cheval[0]);
-    /*
-    for(var j =0; j< 4; j++) {
-        for (var i = 0; i < 14; i++) {
-            circle[j * 14 + i] = document.createElementNS(svgNS, "circle");
-            circle[j * 14 + i].setAttribute("r", "15");
-            circle[j * 14 + i].setAttribute("visibility", "visible");
-            circle[j * 14 + i].setAttribute("visibility", "visible");
-            circle[j * 14 + i].setAttribute("style", "stroke-width: 2;stroke: rgb(0,0,0)");
-
-            switch (j) {
-                case 0 :
-                    circle[j * 14 + i].setAttribute("cx", 33 * i + 18);
-                    circle[j * 14 + i].setAttribute("cy", 18);
-                    circle[j * 14 + i].setAttribute("fill", "yellow");
-
-                    break;
-                case 1 :
-                    circle[j * 14 + i].setAttribute("cx", 33 * 14 + 18);
-                    circle[j * 14 + i].setAttribute("cy", 33 * i + 18);
-                    circle[j * 14 + i].setAttribute("fill", "red");
-                    break;
-                case 2 :
-                    circle[j * 14 + i].setAttribute("cx", 33 * (14 - i) + 18);
-                    circle[j * 14 + i].setAttribute("cy", 33 * 14 + 18);
-                    circle[j * 14 + i].setAttribute("fill", "green");
-                    break;
-                case 3 :
-                    circle[j * 14 + i].setAttribute("cx", 18);
-                    circle[j * 14 + i].setAttribute("cy", 33 * (14 - i) + 18);
-                    circle[j * 14 + i].setAttribute("fill", "blue");
-                    break;
-
-                default :
-                    break;
-            }
-            svgGround.appendChild(circle[j * 14 + i]);
+                if(countToStop == 0){
+                    isAnimate = false;
+                }
+            }, ((i-1)*10+j)*150, horse.index, j, movePoint-i);
         }
-    }*/
+    }
 }
 
 function setupGame(){
@@ -176,9 +167,15 @@ function animateDie(id, value){
 
 function rand(){
     for(let j = 0; j < 10; j++){
+        isAnimate = true;
         var des = Math.floor((Math.random() * 6) + 1);
         //animateDie(0, des);
-        setTimeout(function (value){animateDie(0, value);}, j*50, des);
+        setTimeout(function (value, count){
+            animateDie(0, value);
+            if(count == 9){
+                isAnimate = false;
+            }
+        }, j*50, des, j);
     }
     console.log(des);
     return des;
@@ -191,49 +188,64 @@ let horses = [
     [-1,-1],
     [-1,-1],
 ];
-function play(event) {
-    event.preventDefault();
-    activePlayer  = (activePlayer + 1) % 4;
-    let value = rand();
-    log("--------------------------------");
-    log("Tour de " + players[activePlayer]);
-    log("Dé : " + value);
-    for(let i=0; i<4; i++){
-        if (i == activePlayer){
-            document.getElementById("p"+i).className = "label label-success";
+
+
+
+function play() {
+    if(!isAnimate){
+        activePlayer  = (activePlayer + 1) % 4;
+        let value = rand();
+
+
+        //todo a finir
+        moveHorse(horsesG[0], value);
+
+        log("--------------------------------");
+        log("Tour de " + players[activePlayer]);
+        log("Dé : " + value);
+        for(let i=0; i<4; i++){
+            if (i == activePlayer){
+                document.getElementById("p"+i).className = "label label-success";
+            }
+            else{
+                document.getElementById("p"+i).className = "label label-default";
+            }
         }
-        else{
-            document.getElementById("p"+i).className = "label label-default";
+
+        ///S'il n'a pas de cheval sur le board
+        let activeHorses = 2 - horses[activePlayer].filter(function(x){return x==-1}).length;
+        log("Nombre de chevaux actifs : " + activeHorses);
+        switch (activeHorses){
+            case 0:
+                if(value == 6){
+                    log("Sortie de cheval !");
+                    horses[activePlayer][0] = activePlayer*15;
+                }
+                break;
+            case 1:
+                if(value == 6){
+                    log("Voulez-vous sortir un cheval");
+                } else {
+                    horses[activePlayer][0] += value;
+                    horses[activePlayer][0] %= 60;
+                }
+                break;
+            case 2:
+                log("Quel cheval voulez-vous avancer ?");
+                break;
+            default:
+                log("ERREUR !");
+                break;
         }
+        log("Chevaux : (" + horses[activePlayer] + ")");
     }
 
-    ///S'il n'a pas de cheval sur le board
-    let activeHorses = 2 - horses[activePlayer].filter(function(x){return x==-1}).length;
-    log("Nombre de chevaux actifs : " + activeHorses);
-    switch (activeHorses){
-        case 0:
-            if(value == 6){
-                log("Sortie de cheval !");
-                horses[activePlayer][0] = activePlayer*15;
-            }
-            break;
-        case 1:
-            if(value == 6){
-                log("Voulez-vous sortir un cheval");
-            } else {
-                horses[activePlayer][0] += value;
-                horses[activePlayer][0] %= 60;
-            }
-            break;
-        case 2:
-            log("Quel cheval voulez-vous avancer ?");
-            break;
-        default:
-            log("ERREUR !");
-            break;
+    if(document.selection && document.selection.empty) {
+        document.selection.empty();
+    } else if(window.getSelection) {
+        var sel = window.getSelection();
+        sel.removeAllRanges();
     }
-    log("Chevaux : (" + horses[activePlayer] + ")");
-
 }
 
 function log (message) {
