@@ -108,19 +108,43 @@ function createHorse() {
 function moveHorse(horse, movePoint) {
     for(var i = 1; i<=movePoint; i++){
         isAnimate = true;
-
         horse.index = (horse.index + 1)%(circle.length);
-
         for(let j = 1; j <= 10; j++){
-            setTimeout(function(index, fragDelay, countToStop){
+            setTimeout(function(indexH, fragDelay, countToStop){
+                var index = indexH;
                 for(var k = 0 ; k < horse.pos2D.length; k++){
-                    if(index < 15 && k%2 == 0){
+                    if(index < 15 && index > 0 && k%2 == 0){
                         horse.pos2D[k] += 3;
                         if(fragDelay == 10){
                             horse.pos2D[k]+=3;
                         }
                         horsesG[0].svg.setAttribute("d", "M" + horse.pos2D);
                     }
+
+                    if(index > 14 && index < 29 && k%2 == 1){
+                        horse.pos2D[k] += 3;
+                        if(fragDelay == 10){
+                            horse.pos2D[k]+=3;
+                        }
+                        horsesG[0].svg.setAttribute("d", "M" + horse.pos2D);
+                    }
+
+                    if(index > 28 && index < 43 && k%2 == 0){
+                        horse.pos2D[k] -= 3;
+                        if(fragDelay == 10){
+                            horse.pos2D[k]-=3;
+                        }
+                        horsesG[0].svg.setAttribute("d", "M" + horse.pos2D);
+                    }
+
+                    if( (index > 42 || index == 0)  && k%2 == 1){
+                        horse.pos2D[k] -= 3;
+                        if(fragDelay == 10){
+                            horse.pos2D[k]-=3;
+                        }
+                        horsesG[0].svg.setAttribute("d", "M" + horse.pos2D);
+                    }
+
                 }
 
                 if(countToStop == 0){
